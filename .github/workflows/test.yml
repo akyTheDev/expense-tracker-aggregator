@@ -16,6 +16,12 @@ jobs:
       DB__USERNAME: username
       DB__NAME: postgres
       DB__HOST: localhost
+      LOG_LEVEL: info
+      KAFKA__CLIENT_ID: 'kafka-client'
+      KAFKA__BROKER: localhost:59092
+      KAFKA__USERNAME: 'admin'
+      KAFKA__PASSWORD: 'admin-secret'
+      KAFKA__CONSUMER_GROUP: 'emp-backend'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
