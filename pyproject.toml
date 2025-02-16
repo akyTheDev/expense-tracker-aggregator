@@ -1,0 +1,87 @@
+[tool.poetry]
+name = "expense-tracker-aggregator"
+version = "0.0.1"
+description = ""
+authors = ["akyTheDev <aky.dev@proton.me>"]
+readme = "README.md"
+packages = [
+    { include = "src/" },
+    {include = "*", from = "src"},
+]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+pydantic = "^2.10.6"
+pydantic-settings = "^2.7.1"
+asyncpg = "^0.30.0"
+overrides = "^7.7.0"
+aiocache = "^0.12.3"
+aiokafka = "^0.12.0"
+pypika = "^0.48.9"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+pytest-mock = "^3.14.0"
+pre-commit = "^3.7.1"
+ruff = "^0.4.10"
+mypy = "^1.10.0"
+coverage = "^7.5.3"
+pytest-asyncio = "^0.23.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+exclude = ["tests"]
+
+[tool.ruff.lint]
+select = [
+    # pydocstyle
+    "D",
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+strict_optional = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+skip_empty = true
+show_missing = true
+fail_under = 100
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.1"
+tag_format = "$version"
+version_files = ["pyproject.toml"]
