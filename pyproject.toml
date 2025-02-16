@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "expense-tracker-aggregator"
-version = "0.0.1"
+version = "0.1.0"
 description = ""
 authors = ["akyTheDev <aky.dev@proton.me>"]
 readme = "README.md"
@@ -83,6 +83,6 @@ fail_under = 100
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.0.1"
+version = "0.1.0"
 tag_format = "$version"
 version_files = ["pyproject.toml"]
