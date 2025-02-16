@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
     environment: test
     env:
-      DB__PORT: 5432
+      DB__PORT: 5433
       DB__PASSWORD: password
       DB__USERNAME: username
       DB__NAME: postgres
