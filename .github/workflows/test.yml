@@ -1,0 +1,64 @@
+---
+name: Test
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    environment: test
+    env:
+      DB__PORT: 5433
+      DB__PASSWORD: password
+      DB__USERNAME: username
+      DB__NAME: postgres
+      DB__HOST: localhost
+      LOG_LEVEL: info
+      KAFKA__CLIENT_ID: 'kafka-client'
+      KAFKA__BROKER: localhost:59092
+      KAFKA__USERNAME: 'admin'
+      KAFKA__PASSWORD: 'admin-secret'
+      KAFKA__CONSUMER_GROUP: 'emp-backend'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Start docker
+        run: docker compose -f docker-compose.test.yml up -d
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install poetry
+        run: pip install poetry
+
+      - name: Install library
+        run: |
+          poetry lock 
+          poetry install
+
+      - name: Check lint
+        run: make lint
+
+      - name: Create test environment
+        run: |
+          poetry run python tests/setup/setup.py
+
+      - name: Project tests
+        run: ./scripts/test.sh

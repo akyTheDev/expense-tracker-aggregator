@@ -15,11 +15,11 @@ install-dev:
 
 .PHONY: lint
 lint:
-	ruff check . --fix
+	poetry run ruff check . --fix
 
 .PHONY: format
 format:
-	ruff format . --check
+	poetry run ruff format . --check
 
 .PHONY: coverage
 coverage:
