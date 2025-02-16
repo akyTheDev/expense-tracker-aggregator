@@ -42,13 +42,13 @@ jobs:
       - name: Install poetry
         run: pip install poetry
 
-      - name: Check lint
-        run: make lint
-
       - name: Install library
         run: |
           poetry lock --no-update
           poetry install
+
+      - name: Check lint
+        run: make lint
 
       - name: Create test environment
         run: |
